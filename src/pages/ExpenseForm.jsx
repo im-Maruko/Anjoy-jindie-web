@@ -721,7 +721,9 @@ export default function TestPage() {
                             <Row gutter={[64, 8]}>
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="adminField1" label="报批事项" placeholder="请选择" /></Col>
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="adminField2" label="审批编号" /></Col>
-                                <Col flex="60%"><ProFormText fieldProps={{ variant: 'filled' }} name="adminField3" label="批报内容" rules={[{ required: true }]} /></Col>
+                                <Col flex="100%">
+                                    <ProFormTextArea name="reason" label="报告内容" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                </Col>
                                 <Col flex="100%">
                                     {/* level={5} 对应的是字号大小，数值越小字越大，5 刚好是 16px 左右的加粗标题 */}
                                     <Title level={5}>审批信息</Title>
@@ -768,7 +770,9 @@ export default function TestPage() {
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }}  label="支付方式" name="marketing8" placeholder="请选择"  /></Col>
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }}  label="发票类型" name="marketing9" placeholder="请选择"  /></Col>
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }}  label="呈送类型" name="marketing8" placeholder="请选择"  /></Col>
-                                <Col flex="100%"><ProFormText fieldProps={{ variant: 'filled' }}  label="报告内容"  name="marketing10" rules={[{ required: true }]} /></Col>
+                                <Col flex="100%">
+                                    <ProFormTextArea name="reason" label="报告内容" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                </Col>
                                 <Col flex="100%">
                                     {/* level={5} 对应的是字号大小，数值越小字越大，5 刚好是 16px 左右的加粗标题 */}
                                     <Title level={5}>流程参与人</Title>
@@ -954,7 +958,9 @@ export default function TestPage() {
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="上年度盈亏比例" /></Col>
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="本年度已使用费用" /></Col>
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="supermarketField1" label="支付方式"  /></Col>
-                                <Col flex="40%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="报告内容" /></Col>
+                                <Col flex="100%">
+                                    <ProFormTextArea name="reason" label="报告内容" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                </Col>
                                 <Col flex="100%">
                                     {/* level={5} 对应的是字号大小，数值越小字越大，5 刚好是 16px 左右的加粗标题 */}
                                     <Title level={5}>审批人员</Title>
@@ -1122,24 +1128,8 @@ export default function TestPage() {
                                                  }}
                                     />
                                 </Col>
-                                <Col flex="20%">
-                                    <ProFormText name="supermarketField1" label="是否经过部门主管/主任 " placeholder="请选择或输入"
-                                                 fieldProps={{
-                                                     variant: 'filled',
-                                                     autoComplete: 'off',
-                                                     onClick: () => setIsDeptModalOpen(true),
-                                                     suffix: (
-                                                         <ProfileOutlined
-                                                             style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
-                                                             onClick={(e) => {
-                                                                 e.stopPropagation();
-                                                                 setIsDeptModalOpen(true);
-                                                             }}
-                                                         />
-                                                     )
-                                                 }}
-                                    />
-                                </Col>
+                                <Col flex="20%"><ProFormSwitch name="isImport" label="否经过部门主管/主任" /></Col>
+
 
                             </Row>
                         </div>
