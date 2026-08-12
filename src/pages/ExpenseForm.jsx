@@ -514,10 +514,10 @@ export default function TestPage() {
                         </Col>
                         {/*第二类*/}
                         <Col flex="100%">
-                            <Title level={5}>申请事项内容</Title>
+                            <Title level={5}>申请信息</Title>
                         </Col>
                         <Col flex="100%">
-                            <ProFormTextArea name="reason" label="事由" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                            <ProFormTextArea name="reason" label="申请事项内容" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                         </Col>
                         {/*第三类*/}
                         <Col flex="100%">
