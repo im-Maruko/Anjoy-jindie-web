@@ -85,7 +85,17 @@ export default function TestPage() {
             dataIndex: 'originalAmount',
             width: 140,
             formItemProps: { rules: [{ required: true, message: '必填' }] },
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledNumber(rest),
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
+                const customRest = {
+                    ...rest,
+                    placeholder: '请输入',
+                    fieldProps: {
+                        ...rest.fieldProps,
+                        placeholder: '请输入',
+                    }
+                };
+                return renderFilledNumber(customRest);
+            },
         },
         {
             title: '可用余额',
