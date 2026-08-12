@@ -585,15 +585,22 @@ export default function TestPage() {
                         <Col flex="100%">
                             <ProFormTextArea name="reason" label="主题/事由" placeholder="请输入主题/事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                         </Col>
+
+                        {/*第三类*/}
+                        <Col flex="100%">
+                            <Title level={5}>结算信息</Title>
+                        </Col>
                         {/*第三类*/}
                         <Col flex="100%">
                             <Title level={5}>结算信息</Title>
                         </Col>
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="receiveType" label="收款类型" placeholder="请选择" rules={[{ required: true }]} /></Col>
                         <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="receiverName" label="收款人" placeholder="请输入" rules={[{ required: true }]} /></Col>
+                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payType" label="支付类型" placeholder="请选择" rules={[{ required: true }]} /></Col>
+
                         <Col flex="20%"><ProFormText name="currency" label="本位币" initialValue="人民币" rules={[{ required: true }]} disabled fieldProps={{ variant: 'filled' }} /></Col>
                         <Col flex="20%"><ProFormSwitch name="multiCurrency" label="多币种" /></Col>
-                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payType" label="支付类型" placeholder="请选择" rules={[{ required: true }]} /></Col>
+
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payMethod" label="结算方式" placeholder="请选择" options={[{ label: '电汇', value: 'wire' }]} rules={[{ required: true }]} /></Col>
                         <Col flex="20%"><ProFormSwitch name="isPrepay" label="预付" /></Col>
                         <Col flex="20%"><ProFormDatePicker fieldProps={{ variant: 'filled' }} name="expectPayDate" label="期望付款日期" placeholder="请选择" width="100%" /></Col>
