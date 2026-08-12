@@ -11,7 +11,7 @@ import {
     ProFormSwitch,
     EditableProTable,
     FooterToolbar,
-    ProFormUploadDragger
+    ProFormUploadDragger, ProFormTextArea
 } from '@ant-design/pro-components';
 const { Title } = Typography;
 const { Text } = Typography;
@@ -425,9 +425,9 @@ export default function TestPage() {
                 }}
             >
                 {/* ===================================================================== */}
-                {/* 模块一：基本信息（你的原有逻辑，增加了 7 种类型选择） */}
+                {/* 模块一：费用申请单（你的原有逻辑，增加了 7 种类型选择） */}
                 {/* ===================================================================== */}
-                <Card title="基本信息" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
+                <Card title="费用申请单" bordered={false} style={{ marginBottom: 16, borderRadius: 8 }}>
                     <div style={{ marginBottom: 32, display: 'flex', alignItems: 'center', gap: '64px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                             <Avatar size={54} icon={<UserOutlined />} src="https://api.dicebear.com/7.x/notionists/svg?seed=Wanping" style={{ backgroundColor: '#1677ff' }} />
@@ -450,6 +450,10 @@ export default function TestPage() {
                     </div>
 
                     <Row gutter={[64, 8]}>
+                        {/*第一类*/}
+                        <Col flex="100%">
+                            <Title level={5}>基本信息</Title>
+                        </Col>
                         <Col flex="20%"><ProFormDatePicker fieldProps={{ variant: 'filled' }} name="applyDate" label="申请日期" width="100%" rules={[{ required: true }]} /></Col>
                         <Col flex="20%">
                             <ProFormText name="region" label="费用承担部门" placeholder="请选择或输入" rules={[{ required: true }]}
@@ -469,7 +473,6 @@ export default function TestPage() {
                                          }}
                             />
                         </Col>
-                        <Col flex="20%"><ProFormText name="currency" label="本位币" initialValue="人民币" rules={[{ required: true }]} disabled fieldProps={{ variant: 'filled' }} /></Col>
                         <Col flex="20%">
                             <ProFormText name="region" label="费用支付公司" placeholder="请选择或输入" rules={[{ required: true }]}
                                          fieldProps={{
@@ -509,38 +512,37 @@ export default function TestPage() {
                                 ]}
                             />
                         </Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="receiverControlNo" label="费控单号" disabled={true} /></Col>
-                        <Col flex="20%"><ProFormSwitch name="multiCurrency" label="多币种" /></Col>
-                        <Col flex="40%"><ProFormText fieldProps={{ variant: 'filled' }} name="reason" label="事由" placeholder="请输入事由" rules={[{ required: true }]} /></Col>
-
-                        {/* 以下为通用基础字段 */}
+                        {/*第二类*/}
+                        <Col flex="100%">
+                            <Title level={5}>申请事项内容</Title>
+                        </Col>
+                        <Col flex="100%">
+                            <ProFormTextArea name="reason" label="事由" placeholder="请输入事由" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                        </Col>
+                        {/*第三类*/}
+                        <Col flex="100%">
+                            <Title level={5}>结算信息</Title>
+                        </Col>
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="receiveType" label="收款类型" placeholder="请选择" rules={[{ required: true }]} /></Col>
                         <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="receiverName" label="收款人" placeholder="请输入" rules={[{ required: true }]} /></Col>
+                        <Col flex="20%"><ProFormText name="currency" label="本位币" initialValue="人民币" rules={[{ required: true }]} disabled fieldProps={{ variant: 'filled' }} /></Col>
+                        <Col flex="20%"><ProFormSwitch name="multiCurrency" label="多币种" /></Col>
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payType" label="支付类型" placeholder="请选择" rules={[{ required: true }]} /></Col>
-                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payMethod" label="支付方式" placeholder="请选择" options={[{ label: '电汇', value: 'wire' }]} rules={[{ required: true }]} /></Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractNo" label="合同号" placeholder="请输入" /></Col>
-                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="contractType" label="合同类型" placeholder="请选择" options={[{ label: '合同', value: 'contract' }]} /></Col>
+                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payMethod" label="结算方式" placeholder="请选择" options={[{ label: '电汇', value: 'wire' }]} rules={[{ required: true }]} /></Col>
+                        <Col flex="20%"><ProFormSwitch name="isPrepay" label="预付" /></Col>
+                        <Col flex="20%"><ProFormDatePicker fieldProps={{ variant: 'filled' }} name="expectPayDate" label="期望付款日期" width="100%" /></Col>
 
+                        {/*第四类*/}
+                        <Col flex="100%">
+                            <Title level={5}>合同相关信息</Title>
+                        </Col>
+                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="contractType" label="合同类型" placeholder="请选择" options={[{ label: '合同', value: 'contract' }]} /></Col>
+                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractNo" label="合同号" placeholder="请输入" /></Col>
                         <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractSettle" label="合同结算方式" disabled={true} /></Col>
-                        <Col flex="20%"><ProFormSwitch name="isArchive" label="归档" disabled /></Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="archiver" label="归档人" disabled={true} /></Col>
-                        <Col flex="20%">
-                            <ProFormText name="region" label="厂编" placeholder="请选择或输入"
-                                         fieldProps={{
-                                             variant: 'filled',
-                                             autoComplete: 'off',
-                                             onClick: () => setIsDeptModalOpen(true),
-                                             suffix: (
-                                                 <ProfileOutlined
-                                                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
-                                                     onClick={(e) => {
-                                                         e.stopPropagation();
-                                                         setIsDeptModalOpen(true);
-                                                     }}
-                                                 />
-                                             )
-                                         }}
-                            />
+
+                        {/*第五类*/}
+                        <Col flex="100%">
+                            <Title level={5}>费用相关信息</Title>
                         </Col>
                         <Col flex="20%">
                             <ProFormText name="region" label="归属区域" placeholder="请选择或输入"
@@ -561,6 +563,7 @@ export default function TestPage() {
                                          }}
                             />
                         </Col>
+                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="biCustomerType" label="BI客户类别" disabled={true} /></Col>
                         <Col flex="20%">
                             <ProFormText name="region" label="客户（导入数据用）" placeholder="请选择或输入"
                                          fieldProps={{
@@ -579,14 +582,33 @@ export default function TestPage() {
                                          }}
                             />
                         </Col>
-
                         <Col flex="20%"><ProFormSwitch name="isRef" label="是否应收单引用" disabled /></Col>
-                        <Col flex="20%"><ProFormSwitch name="isPrepay" label="预付" /></Col>
-                        <Col flex="20%"><ProFormSwitch name="isLetter" label="费用函" disabled /></Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="biCustomerType" label="BI客户类别" disabled={true} /></Col>
-                        <Col flex="20%"><ProFormDatePicker fieldProps={{ variant: 'filled' }} name="expectPayDate" label="期望付款日期" width="100%" /></Col>
-                        <Col flex="20%"><ProFormSwitch name="isInit" label="初始化单据" disabled /></Col>
                         <Col flex="20%"><ProFormSwitch name="isImport" label="是否导入单据" /></Col>
+                        <Col flex="20%"><ProFormSwitch name="isInit" label="初始化单据" disabled /></Col>
+                        <Col flex="20%">
+                            <ProFormText name="region" label="厂编" placeholder="请选择或输入"
+                                         fieldProps={{
+                                             variant: 'filled',
+                                             autoComplete: 'off',
+                                             onClick: () => setIsDeptModalOpen(true),
+                                             suffix: (
+                                                 <ProfileOutlined
+                                                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
+                                                     onClick={(e) => {
+                                                         e.stopPropagation();
+                                                         setIsDeptModalOpen(true);
+                                                     }}
+                                                 />
+                                             )
+                                         }}
+                            />
+                        </Col>
+
+                        {/*<Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="receiverControlNo" label="费控单号" disabled={true} /></Col>*/}
+                        {/*<Col flex="20%"><ProFormSwitch name="isArchive" label="归档" disabled /></Col>*/}
+                        {/*<Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="archiver" label="归档人" disabled={true} /></Col>*/}
+                        {/*<Col flex="20%"><ProFormSwitch name="isLetter" label="费用函" disabled /></Col>*/}
+
                     </Row>
                 </Card>
 
