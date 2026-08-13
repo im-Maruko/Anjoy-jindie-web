@@ -29,12 +29,49 @@ export default function TestPage() {
         { id: '2', fieldA: '测试数据2', fieldB: '内容2', amount: 3200 },
     ];
 
-    // 这是一个工厂函数，用来生成带有 filled 样式的输入框
-    const renderFilledInput = (props) => <Input variant="filled" placeholder="请输入" {...props} />;
-    const renderFilledNumber = (props) => <InputNumber variant="filled" style={{ width: '100%' }} {...props} />;
-    const renderFilledDate = (props) => <DatePicker variant="filled" style={{ width: '100%' }} {...props} />;
+    // 文本输入框：默认 "请输入"
+    const renderFilledInput = (props) => {
+        // 只认我们在 fieldProps 里显式写的 placeholder (例如 getSearchFieldProps 传进来的)
+        const explicitPlaceholder = props?.fieldProps?.placeholder;
+        return (
+            <Input
+                variant="filled"
+                {...props}
+                // 放到 {...props} 后面，强制覆盖 ProTable 自动生成的啰嗦提示词
+                placeholder={explicitPlaceholder || '请输入'}
+            />
+        );
+    };
+
+// 数字金额输入框：默认 "请输入"
+    const renderFilledNumber = (props) => {
+        const explicitPlaceholder = props?.fieldProps?.placeholder;
+        return (
+            <InputNumber
+                variant="filled"
+                style={{ width: '100%' }}
+                {...props}
+                placeholder={explicitPlaceholder || '请输入'}
+            />
+        );
+    };
+
+// 日期选择框：默认 "请选择"
+    const renderFilledDate = (props) => {
+        const explicitPlaceholder = props?.fieldProps?.placeholder;
+        return (
+            <DatePicker
+                variant="filled"
+                style={{ width: '100%' }}
+                {...props}
+                placeholder={explicitPlaceholder || '请选择'}
+            />
+        );
+    };
+
     const renderFilledSwitch = (props) => <Switch {...props} />;
 
+// getSearchFieldProps 保持你截图里的原样即可
     const getSearchFieldProps = (fieldName) => ({
         placeholder: '请选择或输入',
         autoComplete: 'off',
@@ -68,14 +105,12 @@ export default function TestPage() {
             formItemProps: { rules: [{ required: true, message: '必填' }] },
             fieldProps: {
                 variant: 'filled',
-                placeholder: '选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
+                placeholder: '请选择或输入',
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
@@ -85,17 +120,8 @@ export default function TestPage() {
             dataIndex: 'originalAmount',
             width: 140,
             formItemProps: { rules: [{ required: true, message: '必填' }] },
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-                const customRest = {
-                    ...rest,
-                    placeholder: '请输入',
-                    fieldProps: {
-                        ...rest.fieldProps,
-                        placeholder: '请输入',
-                    }
-                };
-                return renderFilledNumber(customRest);
-            },
+            // 👇 恢复极简写法，底层函数会自动处理 '请输入'
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledNumber(rest),
         },
         {
             title: '可用余额',
@@ -116,93 +142,64 @@ export default function TestPage() {
             renderFormItem: renderFilledSearchInput('本位币已用金额'),
         },
         {
-            title: '厂编', dataIndex: 'expenseCustomer', valueType: 'text', // 🌟 第一步：改为 text，允许手动输入
+            title: '期望付款日期',
+            dataIndex: 'expectPayDate',
+            width: 160,
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledDate(rest),
+        },
+        {
+            title: '厂编', dataIndex: 'expenseCustomer', valueType: 'text',
             width: 200,
             fieldProps: {
                 variant: 'filled',
                 placeholder: '请选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
         },
 
         {
-            title: '费用客户', dataIndex: 'expenseCustomer', valueType: 'text', // 🌟 第一步：改为 text，允许手动输入
+            title: '费用客户', dataIndex: 'expenseCustomer', valueType: 'text',
             width: 230,
             fieldProps: {
                 variant: 'filled',
                 placeholder: '请选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
         },
-
         {
             title: '呈送单号',
             dataIndex: 'submissionNo',
             width: 170,
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-                const customRest = {
-                    ...rest,
-                    placeholder: '请输入',
-                    fieldProps: {
-                        ...rest.fieldProps,
-                        placeholder: '请输入呈送单号',
-                    }
-                };
-                return renderFilledInput(customRest);
-            },
+            // 👇 恢复极简写法，统一为 '请输入'
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledInput(rest),
         },
         {
             title: <span className="table-header-required">费用说明</span>,
             dataIndex: 'expenseDesc',
             width: 200,
             formItemProps: { rules: [{ required: true, message: '必填' }] },
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-                // 构造新的配置，强行注入 placeholder
-                const customRest = {
-                    ...rest,
-                    placeholder: '请输入',
-                    fieldProps: {
-                        ...rest.fieldProps,
-                        placeholder: '请输入',
-                    }
-                };
-                return renderFilledInput(customRest);
-            },
+            // 👇 恢复极简写法
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledInput(rest),
         },
         {
             title: <span className="table-header-required">归属日期</span>,
             dataIndex: 'attributionDate',
             width: 160,
-            // 👇 1. 把 rules 里面的 placeholder 删掉，保持校验规则的纯净
             formItemProps: { rules: [{ required: true, message: '必填' }] },
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-                // 👇 2. 使用我们之前用过的注入法，强行覆盖 DatePicker 的占位符
-                const customRest = {
-                    ...rest,
-                    placeholder: '请选择',
-                    fieldProps: {
-                        ...rest.fieldProps,
-                        placeholder: '请选择',
-                    }
-                };
-                return renderFilledDate(customRest);
-            },
+            // 👇 恢复极简写法
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledDate(rest),
         },
         {
             title: '下游单据编码',
@@ -210,7 +207,6 @@ export default function TestPage() {
             width: 130,
             renderFormItem: renderFilledSearchInput('下游单据编码'),
         },
-
         {
             title: '多项目模式',
             dataIndex: 'multiProjectMode',
@@ -218,78 +214,62 @@ export default function TestPage() {
             renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledSwitch(rest),
         },
         {
-            title: '项目号A', dataIndex: 'projectNoA', valueType: 'text', // 🌟 第一步：改为 text，允许手动输入
+            title: '项目号A', dataIndex: 'projectNoA', valueType: 'text',
             width: 230,
             fieldProps: {
                 variant: 'filled',
                 placeholder: '请选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
         },
         {
-            title: '预算项目', dataIndex: 'budgetProject', valueType: 'text', // 🌟 第一步：改为 text，允许手动输入
+            title: '预算项目', dataIndex: 'budgetProject', valueType: 'text',
             width: 230,
             fieldProps: {
                 variant: 'filled',
                 placeholder: '请选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
         },
         {
-            title: '资金来源类型', dataIndex: 'fundSourceType', valueType: 'text', // 🌟 第一步：改为 text，允许手动输入
+            title: '资金来源类型', dataIndex: 'fundSourceType', valueType: 'text',
             width: 250,
             fieldProps: {
                 variant: 'filled',
                 placeholder: '请选择或输入',
-                // 🌟 第二步：加上 suffix 图标，并绑定点击弹窗事件
                 suffix: <ProfileOutlined
                     style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
                     onClick={(e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         console.log('点击了申请区域图标，在这里触发弹窗');
-                        // setIsDeptModalOpen(true); // 后续你写了弹窗后，把控制弹窗的代码写这里
                     }}
                 />
             }
         },
-
         {
             title: '备注',
             dataIndex: 'remark',
             width: 190,
-            renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-                const customRest = {
-                    ...rest,
-                    placeholder: '请输入',
-                    fieldProps: {
-                        ...rest.fieldProps,
-                        placeholder: '请输入',
-                    }
-                };
-                return renderFilledInput(customRest);
-            },
+            // 👇 恢复极简写法
+            renderFormItem: (item, { type, defaultRender, ...rest }, form) => renderFilledInput(rest),
         },
         {
             title: '未申请金额原币',
             dataIndex: 'unappliedOriginal',
             width: 140,
-            readonly: true, // 只读列会自动渲染为文本，不用处理输入框
+            readonly: true,
         },
         {
             title: '未申请金额本位币',
@@ -562,6 +542,7 @@ export default function TestPage() {
                             />
                         </Col>
                         <Col flex="20%"><ProFormText name="company" label="费用承担公司" initialValue="安井食品集团股份有限公司" rules={[{ required: true }]} disabled fieldProps={{ variant: 'filled' }} /></Col>
+
                         <Col flex="20%">
                             {/* 🌟 核心控制开关：7种申请单类型 */}
                             <ProFormSelect
@@ -599,15 +580,16 @@ export default function TestPage() {
 
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="payMethod" label="结算方式" placeholder="请选择" options={[{ label: '电汇', value: 'wire' }]} rules={[{ required: true }]} /></Col>
                         <Col flex="20%"><ProFormSwitch name="isPrepay" label="预付" /></Col>
-                        <Col flex="20%"><ProFormDatePicker fieldProps={{ variant: 'filled' }} name="expectPayDate" label="期望付款日期" placeholder="请选择" width="100%" /></Col>
-
                         {/*第四类*/}
                         <Col flex="100%">
                             <Title level={5}>合同相关信息</Title>
                         </Col>
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="contractType" label="合同类型" placeholder="请选择" options={[{ label: '合同', value: 'contract' }]} /></Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractNo" label="合同号" placeholder="请输入" /></Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractSettle" label="合同结算方式" placeholder="请选择" disabled={true} /></Col>
+                        <Col flex="20%"><ProFormText name="contractNo" label="合同号" initialValue="" placeholder="上游单据带入" disabled fieldProps={{ variant: 'filled' }} /></Col>
+
+
+
+                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractSettle" label="合同结算方式" placeholder="关联合同带出" disabled={true} /></Col>
 
                         {/*第五类*/}
                         <Col flex="100%">
@@ -632,7 +614,7 @@ export default function TestPage() {
                                          }}
                             />
                         </Col>
-                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="biCustomerType" label="BI客户类别" placeholder="请输入" disabled={true} /></Col>
+                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="biCustomerType" label="BI客户类别" placeholder="销售订单带出" disabled={true} /></Col>
                         <Col flex="20%">
                             <ProFormText name="region" label="客户（导入数据用）" placeholder="请选择"
                                          fieldProps={{
@@ -933,13 +915,11 @@ export default function TestPage() {
                             <Row gutter={[64, 8]}>
                                 <Col flex="20%"><ProFormText name="supermarketField1" label="门店" placeholder="请选择" fieldProps={{ variant: 'filled', readOnly: true, suffix: <ProfileOutlined style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }} onClick={(e) => { e.stopPropagation(); setIsDeptModalOpen(true); }} />, onClick: () => setIsDeptModalOpen(true), style: { cursor: 'pointer' } }} /></Col>
                                 <Col flex="20%"><ProFormText name="supermarketField1" label="系统课别" placeholder="请选择" fieldProps={{ variant: 'filled', readOnly: true, suffix: <ProfileOutlined style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }} onClick={(e) => { e.stopPropagation(); setIsDeptModalOpen(true); }} />, onClick: () => setIsDeptModalOpen(true), style: { cursor: 'pointer' } }} /></Col>
-
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="上年度销售总额" placeholder="请输入" /></Col>
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="上年度费用金额" placeholder="请输入" /></Col>
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="上年度盈亏金额" placeholder="请输入"/></Col>
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="上年度盈亏比例" placeholder="请输入"/></Col>
-                                <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="本年度已使用费用" placeholder="请输" /></Col>
-                                <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="supermarketField1" label="支付方式" placeholder="请选择" /></Col>
+
                                 <Col flex="100%">
                                     <ProFormTextArea name="report-2" label="报告内容" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
