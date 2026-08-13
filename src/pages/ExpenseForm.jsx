@@ -585,11 +585,32 @@ export default function TestPage() {
                             <Title level={5}>合同相关信息</Title>
                         </Col>
                         <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="contractType" label="合同类型" placeholder="请选择" options={[{ label: '合同', value: 'contract' }]} /></Col>
-                        <Col flex="20%"><ProFormText name="contractNo" label="合同号" initialValue="" placeholder="上游单据带入" disabled fieldProps={{ variant: 'filled' }} /></Col>
-
-
-
+                        <Col flex="20%">
+                            <ProFormText
+                                name="contractNo"
+                                label="合同号"
+                                placeholder="请选择" // 🌟 修改点 1：精简占位符，直奔主题
+                                fieldProps={{
+                                    variant: 'filled',
+                                    autoComplete: 'off',
+                                    readOnly: true, // 🌟 修改点 2：增加只读属性，彻底屏蔽键盘输入，但保留交互活性
+                                    style: { cursor: 'pointer' }, // 🌟 修改点 3：给整个输入框加上小手光标，暗示全局可点击
+                                    onClick: () => setIsDeptModalOpen(true),
+                                    suffix: (
+                                        <ProfileOutlined
+                                            style={{ cursor: 'pointer', color: '#bfbfbf', fontSize: '16px' }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsDeptModalOpen(true);
+                                            }}
+                                        />
+                                    )
+                                }}
+                            />
+                        </Col>
                         <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="contractSettle" label="合同结算方式" placeholder="关联合同带出" disabled={true} /></Col>
+                        <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supplier" label="供应商" placeholder="请输入" /></Col>
+                        <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="ContractStatus" label="合同状态" placeholder="请选择"  /></Col>
 
                         {/*第五类*/}
                         <Col flex="100%">
@@ -616,7 +637,7 @@ export default function TestPage() {
                         </Col>
                         <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="biCustomerType" label="BI客户类别" placeholder="销售订单带出" disabled={true} /></Col>
                         <Col flex="20%">
-                            <ProFormText name="region" label="客户（导入数据用）" placeholder="请选择"
+                            <ProFormText name="region" label="客户（导入数据用）" placeholder="请选择或输入"
                                          fieldProps={{
                                              variant: 'filled',
                                              autoComplete: 'off',
