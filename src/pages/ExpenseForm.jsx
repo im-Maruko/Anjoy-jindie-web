@@ -685,7 +685,7 @@ export default function TestPage() {
                         <div style={{ padding: '8px 0', marginBottom: 0 }}>
                             <Row gutter={[64, 8]}>
                                 <Col flex="100%">
-                                    <ProFormTextArea name="reason" label="报告内容" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="report-1" label="报告内容" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="100%">
                                     {/* level={5} 对应的是字号大小，数值越小字越大，5 刚好是 16px 左右的加粗标题 */}
@@ -728,7 +728,7 @@ export default function TestPage() {
                                     />
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormText name="process1" label="部门主管/主任 " placeholder="请选择或输入 "
+                                    <ProFormText name="process1" label="部门主管/主任 " placeholder="请选择或输入 " rules={[{ required: true }]}
                                                  fieldProps={{
                                                      variant: 'filled',
                                                      autoComplete: 'off',
@@ -764,7 +764,7 @@ export default function TestPage() {
                                     />
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormText name="process1" label="分管审核 " placeholder="请选择或输入"  rules={[{ required: true }]}
+                                    <ProFormText name="process1" label="分管审核 " placeholder="请选择或输入"
                                                  fieldProps={{
                                                      variant: 'filled',
                                                      autoComplete: 'off',
@@ -945,7 +945,7 @@ export default function TestPage() {
                                 <Col flex="20%"><ProFormText fieldProps={{ variant: 'filled' }} name="supermarketField1" label="本年度已使用费用" placeholder="请输" /></Col>
                                 <Col flex="20%"><ProFormSelect fieldProps={{ variant: 'filled' }} name="supermarketField1" label="支付方式" placeholder="请选择" /></Col>
                                 <Col flex="100%">
-                                    <ProFormTextArea name="reportContent" label="报告内容" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="report-2" label="报告内容" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="100%">
                                     {/* level={5} 对应的是字号大小，数值越小字越大，5 刚好是 16px 左右的加粗标题 */}
@@ -989,7 +989,7 @@ export default function TestPage() {
                                     />
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormText name="supermarketField1" label="部门主管/主任 " placeholder="请选择或输入"
+                                    <ProFormText name="supermarketField1" label="部门主管/主任 " placeholder="请选择或输入" rules={[{ required: true }]}
                                                  fieldProps={{
                                                      variant: 'filled',
                                                      autoComplete: 'off',
@@ -1025,7 +1025,7 @@ export default function TestPage() {
                                     />
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormText name="supermarketField1" label="本部审核 " placeholder="请选择或输入" rules={[{ required: true }]}
+                                    <ProFormText name="supermarketField1" label="本部审核 " placeholder="请选择或输入"
                                                  fieldProps={{
                                                      variant: 'filled',
                                                      autoComplete: 'off',
@@ -1160,13 +1160,13 @@ export default function TestPage() {
                                     <Title level={5}>制作内容</Title>
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormTextArea name="reason" label="发布地点" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-location-1" label="发布地点" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="40%">
-                                    <ProFormTextArea name="reason" label="广告位情况" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-condition-1" label="广告位情况" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="40%">
-                                    <ProFormTextArea name="reason" label="发布意义" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-significance-1" label="发布意义" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
 
 
@@ -1212,14 +1212,15 @@ export default function TestPage() {
                                     <Title level={5}>制作内容</Title>
                                 </Col>
                                 <Col flex="20%">
-                                    <ProFormTextArea name="reason" label="发布地点" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-location-2" label="发布地点" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="40%">
-                                    <ProFormTextArea name="reason" label="广告位情况" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-condition-2" label="广告位情况" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
                                 <Col flex="40%">
-                                    <ProFormTextArea name="reason" label="发布意义" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
+                                    <ProFormTextArea name="ad-significance-2" label="发布意义" placeholder="请输入" rules={[{ required: true }]} fieldProps={{variant: 'filled', autoSize: { minRows: 3, maxRows: 5 }}}/>
                                 </Col>
+
                             </Row>
                         </div>
                     )}
